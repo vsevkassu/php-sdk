@@ -9,50 +9,62 @@
  *            полном соответствии с 54-ФЗ
  *  =================================================
  *
- *  ReceiptFilter.php
- *  Объект представляющий фильтр для поиска чеков
+ *  OrderFilter.php
+ *  Объект представляющий фильтр для поиска товаров
  */
 
 
 namespace vsevkassu\sdk;
 
-class ReceiptFilter extends BaseFilter {
+class OrderFilter extends BaseFilter {
 
     /**
-     * Системный номер организации
-     * @var int
-     */
-    public $organization_id;
-
-    /**
-     * Системный номер кассового аппарата
+     * Системный номер кассы
      * @var int
      */
     public $salepoint_id;
 
     /**
-     * Уникальный номер в системе пользователя
+     * Внешний идентификатор заказа
      * @var string
      */
-    public $external_id;
+    public $ext_id;
 
     /**
-     * Статус, константа Receipt::STATUS_
+     * Статус заказа, константа Order::ORDER_STATUS_
+     * @var int
+     */
+    public $order_status;
+
+    /**
+     * Контакт клиента (поиск по полному совпадению)
      * @var string
      */
-    public $status;
+    public $client_contact;
 
     /**
-     * Минимальная дата чека, формат YYYY-MM-DD HH:MM:SS
+     * Имя клиента (поиск по поолному совпадению)
+     * @var string
+     */
+    public $client_name;
+
+    /**
+     * Минимальная дата создания заказа, формат YYYY-MM-DD HH:MM:SS
      * @var string
      */
     public $created_at_from;
 
     /**
-     * Максимальная дата чека, формат YYYY-MM-DD HH:MM:SS
+     * Максимальная дата создания заказа, формат YYYY-MM-DD HH:MM:SS
      * @var string
      */
     public $created_at_to;
+
+    /**
+     * Признак отгрузки заказа, 1 или 0
+     * @var int
+     */
+    public $shipped;
 
     /**
      * Смещение
@@ -65,14 +77,12 @@ class ReceiptFilter extends BaseFilter {
      * Возвращает экземпляр объекта
      *
      * @param $data
-     * @return ReceiptFilter
+     * @return OrderFilter
      */
     public static function fromData($data)
     {
-        $instance = new ReceiptFilter();
+        $instance = new OrderFilter();
         return $instance->addData($data);
     }
-
-
 
 }

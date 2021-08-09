@@ -9,50 +9,56 @@
  *            полном соответствии с 54-ФЗ
  *  =================================================
  *
- *  ReceiptFilter.php
- *  Объект представляющий фильтр для поиска чеков
+ *  ProductFilter.php
+ *  Объект представляющий фильтр для поиска товаров
  */
 
 
 namespace vsevkassu\sdk;
 
-class ReceiptFilter extends BaseFilter {
+class ProductFilter extends BaseFilter {
 
     /**
      * Системный номер организации
      * @var int
      */
-    public $organization_id;
+    public $org_id;
 
     /**
-     * Системный номер кассового аппарата
+     * Внешний идентификатор продукта
+     * @var string
+     */
+    public $ext_id;
+
+    /**
+     * Наименование продукта (поиск по частичному соответствию)
+     * @var string
+     */
+    public $prod_name;
+
+    /**
+     * Тип продукта, константа Item::ITEM_TYPE_
      * @var int
      */
-    public $salepoint_id;
+    public $prod_type;
 
     /**
-     * Уникальный номер в системе пользователя
-     * @var string
+     * Минимальная цена
+     * @var float
      */
-    public $external_id;
+    public $prod_price_from;
 
     /**
-     * Статус, константа Receipt::STATUS_
-     * @var string
+     * Максимальная цена
+     * @var float
      */
-    public $status;
+    public $prod_price_to;
 
     /**
-     * Минимальная дата чека, формат YYYY-MM-DD HH:MM:SS
-     * @var string
+     * Архивный (удаленный) товар
+     * @var int
      */
-    public $created_at_from;
-
-    /**
-     * Максимальная дата чека, формат YYYY-MM-DD HH:MM:SS
-     * @var string
-     */
-    public $created_at_to;
+    public $archive;
 
     /**
      * Смещение
@@ -65,14 +71,12 @@ class ReceiptFilter extends BaseFilter {
      * Возвращает экземпляр объекта
      *
      * @param $data
-     * @return ReceiptFilter
+     * @return ProductFilter
      */
     public static function fromData($data)
     {
-        $instance = new ReceiptFilter();
+        $instance = new ProductFilter();
         return $instance->addData($data);
     }
-
-
 
 }
